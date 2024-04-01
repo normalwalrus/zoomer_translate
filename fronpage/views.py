@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+import csv
+import os
+import random
 
 def submit_form(request):
     if request.method == 'POST':
@@ -11,7 +14,20 @@ def submit_form(request):
 # Create your views here.
 
 def my_view(request):
-    return render(request, 'frontpage.html')
+    options = []
+    with open(os.getcwd() + '/fronpage/data/options.csv', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            options.append(row)
+
+    ran_number = random.randint(0, len(options)-1)
+
+
+    zoomer_word = options[ran_number][0]
+    options[ran_number].pop(0)
+    options = options[ran_number]
+
+    return render(request, 'frontpage.html', {'zoomer_word': zoomer_word, 'options':options})
 
 def thank_you(request):
     return render(request, 'thankyou.html')
