@@ -20,7 +20,8 @@
         <p>'No Cap'</p>
 
         <h2>What best describes this?</h2>
-        <form action="/submit" method="post">
+        <form action="/fronpage/submit/" method="post">
+            {% csrf_token %}
             <input type="radio" id="option1" name="text_option" value="option1">
             <label for="option1">Option 1</label><br>
             <input type="radio" id="option2" name="text_option" value="option2">
