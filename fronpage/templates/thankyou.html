@@ -9,12 +9,41 @@
         body {
             display: flex;
             justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
         .content {
             text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column; /* Align children vertically */
+            align-items: center; /* Center children horizontally */
+            margin-top: 20px;
+        }
+        .chart {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ccc;
+        }
+        .bar {
+            width: 30px;
+            background-color: blue;
+            transition: height 0.5s ease;
+        }
+        .label {
+            text-align: center;
+            width: 30px; /* Match bar width */
+            margin-top: 5px; /* Adjust spacing */
+            font-size: 12px;
+            align-items: flex-end;
         }
     </style>
 </head>
@@ -24,5 +53,44 @@
         <p>Your submission has been received. We appreciate your feedback.</p>
         <p><a href="/fronpage">Return to Home</a></p>
     </div>
+    <div class="container">
+        <!-- Bar chart -->
+        <h1>For the phrase "{{zoomer_word}}":</h1>
+        <div class="chart">
+            <div class="bar" style="height: 0;"></div> <!-- Value 1 -->
+            <div class="bar" style="height: 0;"></div> <!-- Value 2 -->
+            <div class="bar" style="height: 0;"></div> <!-- Value 3 -->
+        </div>
+        <div class="labels">
+            <span class="label">Label 1</span>
+            <span class="label">Label 2</span>
+            <span class="label">Label 3</span>
+        </div>
+    </div>
+
+    <script>
+        // Values to update the bar heights
+        var values = {{list|safe}};
+
+        // Select all bars
+        var total = values.reduce((acc, curr) => acc + curr, 0);
+
+        // Convert values to percentages
+        var percentages = values.map(value => (value / total) * 100);
+
+        // Find the maximum percentage
+        var maxPercentage = Math.max(...percentages);
+
+        // Scale the percentages based on the maximum percentage
+        var scaledPercentages = percentages.map(percentage => (percentage / maxPercentage) * 100);
+
+        // Select all bars
+        var bars = document.querySelectorAll('.bar');
+
+        // Update bar heights with scaled percentages
+        for (var i = 0; i < bars.length; i++) {
+            bars[i].style.height = (scaledPercentages[i] / 100) * 250 + 'px'; // 200px is the maximum height
+        }
+    </script>
 </body>
 </html>

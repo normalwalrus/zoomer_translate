@@ -19,6 +19,7 @@ def submit_form(request):
             if row[0] == zoomer_word:
                 # Increment the value in the first index
                 row[int(choice)] = str(int(row[int(choice)]) + 1)  # Increment the value
+                final_list_display = row
 
         with open(path_to_final_csv, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
@@ -26,7 +27,10 @@ def submit_form(request):
 
         # Process the form data as needed
         # Redirect to another page
-        return render(request, 'thankyou.html')  # Redirects to /thank-you URL
+            
+        name_zoomer_word = final_list_display[0]
+        final_list_display.pop(0)
+        return render(request, 'thankyou.html', {'zoomer_word':name_zoomer_word, 'list': final_list_display})  # Redirects to /thank-you URL
     else:
         return redirect('select_option')
 # Create your views here.
