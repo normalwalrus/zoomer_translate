@@ -23,8 +23,8 @@
         <form action="/fronpage/submit/" method="post">
             {% csrf_token %}
             {% for option in options %}
-            <input type="radio" id="option" name="text_option" value="option">
-            <label for="option1">{{option}}</label><br>
+            <input type="radio" id="option" name="text_option" value= "{{zoomer_word}}|{{option}}">
+            <label for="option">{{option}}</label><br>
             {% endfor %}
             <button type="submit">Submit</button>
         </form>

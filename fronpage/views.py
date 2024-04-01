@@ -1,11 +1,29 @@
 from django.shortcuts import render, redirect
+from fronpage.utils.common_functions import split_words
 import csv
 import os
 import random
 
+
 def submit_form(request):
+    path_to_final_csv = os.getcwd() + '/fronpage/data/selection.csv'
     if request.method == 'POST':
         text_option = request.POST.get('text_option')
+        zoomer_word, choice = split_words(text_option)
+
+        with open(path_to_final_csv, 'r', newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            rows = list(reader)  # Read all rows into a list
+
+        for row in rows:
+            if row[0] == zoomer_word:
+                # Increment the value in the first index
+                row[int(choice)] = str(int(row[int(choice)]) + 1)  # Increment the value
+
+        with open(path_to_final_csv, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerows(rows)
+
         # Process the form data as needed
         # Redirect to another page
         return render(request, 'thankyou.html')  # Redirects to /thank-you URL
@@ -22,10 +40,12 @@ def my_view(request):
 
     ran_number = random.randint(0, len(options)-1)
 
-
     zoomer_word = options[ran_number][0]
     options[ran_number].pop(0)
     options = options[ran_number]
+
+    for x in range(len(options)):
+        options[x] = str(x+1) + '. '+ options[x]
 
     return render(request, 'frontpage.html', {'zoomer_word': zoomer_word, 'options':options})
 
