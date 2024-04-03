@@ -30,7 +30,7 @@ def submit_form(request):
             
         name_zoomer_word = final_list_display[0]
         final_list_display.pop(0)
-        return render(request, 'thankyou.html', {'zoomer_word':name_zoomer_word, 'list': final_list_display})  # Redirects to /thank-you URL
+        return render(request, 'thankq.html', {'zoomer_word':name_zoomer_word, 'list': final_list_display, "choice":choice})  # Redirects to /thank-you URL
     else:
         return redirect('select_option')
 # Create your views here.
