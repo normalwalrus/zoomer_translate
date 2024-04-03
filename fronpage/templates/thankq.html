@@ -6,6 +6,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <title>Thank You!</title>
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            margin: auto;
+        }
+        .content {
+            text-align: center;
+        }
+        .options {
+            text-align: center;
+        }
         canvas {
             margin: auto;
             display: block;
@@ -20,8 +33,7 @@
     </div>
     
     <h1>For the phrase "{{ zoomer_word }}":</h1>
-    <canvas id="choicesChart" width="30" height="30"></canvas>
-    
+    <canvas id="choicesChart"></canvas>
     <script>
         const values = {{ list|safe }};
         const labels = ["Option 1", "Option 2", "Option 3"];
@@ -30,24 +42,18 @@
             labels: labels,
             datasets: [
                 {
-                    label: labels[0],
-                    data: values[0],
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)', // Red with transparency
-                    borderColor: 'rgba(255, 99, 132, 1)', // Red
-                    borderRadius: 5,
-                },
-                {
-                    label: labels[1],
-                    data: values[1],
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)', // Blue with transparency
-                    borderColor: 'rgba(54, 162, 235, 1)', // Blue
-                    borderRadius: 5,
-                },
-                {
-                    label: labels[2],
-                    data: values[2],
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)', // Green with transparency
-                    borderColor: 'rgba(75, 192, 192, 1)', // Green
+                    // label: labels,
+                    data: values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)', // Red with transparency
+                        'rgba(54, 162, 235, 0.5)', // Blue with transparency
+                        'rgba(75, 192, 192, 0.5)', // Green with transparency
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)', // Red
+                        'rgba(54, 162, 235, 1)', // Blue
+                        'rgba(75, 192, 192, 1)', // Green
+                    ],
                     borderRadius: 5,
                 }
             ]
@@ -61,15 +67,23 @@
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: 'top',
+                        display: false,
                     },
                     title: {
                         display: true,
                         text: 'Choices Chart'
                     }
-                }
+                },
             }
         });
     </script>
+    <div class ="options">
+        <h1>List of Options:</h1>
+        <ul>
+            {% for option in choice %}
+                <li>{{ option }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
