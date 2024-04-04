@@ -35,19 +35,29 @@
         .highlight {
             background-color: #7FFFD4; /* You can change this to any color you prefer */
         }
+        .return-box {
+            display: block;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .return-box:hover {
+            background-color: #f0f0f0; /* Highlight the box on hover */
+        }
+        
     </style>
 </head>
 <body>
     <div class="content">
         <h1>Thank You!</h1>
         <p>You are helping translate slang one word at a time!</p>
-        <p><a href="/fronpage">Return to Home</a></p>
     </div>
     
     <div class="chart-container">
         <h1>For the phrase "{{ zoomer_word }}":</h1>
         <h2>You chose option {{choice}}</h2>
-        <canvas id="choicesChart"></canvas>
+        <canvas id="choicesChart" width="600" height="300"></canvas>
     </div>
     <div class ="options">
         <h1>List of Options:</h1>
@@ -61,6 +71,11 @@
             {% endfor %}
         </ol>
     </div>
+
+    <div>
+        <p><a href="/fronpage" class = 'return-box'>Return to Home</a></p>
+    </div>
+
     <script>
         const values = {{ list|safe }};
         const labels = ["Option 1", "Option 2", "Option 3"];
