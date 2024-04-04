@@ -32,6 +32,9 @@
             padding: 10px; /* Add padding inside the border */
             margin-bottom: 10px; /* Add margin between each list item */
           }
+        .highlight {
+            background-color: #7FFFD4; /* You can change this to any color you prefer */
+        }
     </style>
 </head>
 <body>
@@ -50,7 +53,11 @@
         <h1>List of Options:</h1>
         <ol class="boxed-list">
             {% for option in options %}
-                <li>{{ option }}</li>
+                {% if forloop.counter == choice %}
+                    <li class="highlight">{{ option }}</li>
+                {% else %}
+                    <li>{{ option }}</li>
+                {% endif %}
             {% endfor %}
         </ol>
     </div>

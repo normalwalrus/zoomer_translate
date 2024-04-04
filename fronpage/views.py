@@ -11,6 +11,7 @@ def submit_form(request):
     if request.method == 'POST':
         text_option = request.POST.get('text_option')
         zoomer_word, choice = split_words(text_option)
+        choice = int(choice)
 
         with open(path_to_final_csv, 'r', newline='') as csvfile:
             reader = csv.reader(csvfile)

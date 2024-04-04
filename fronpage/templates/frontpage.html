@@ -27,7 +27,7 @@
             display: none; /* Hide the actual radio button */
         } {% endcomment %}
 
-        .radio-box input[type="radio"]:checked + label {
+        .radio-box input[type="radio"]:checked+label{
             background-color: #f0f0f0; /* Highlight the box when radio button is checked */
         }
         
@@ -48,6 +48,7 @@
                     {{ option }}
                 </label>
             {% endfor %}
+
             <button type="submit">Submit</button>
         </form>
     </div>
