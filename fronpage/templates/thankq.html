@@ -27,6 +27,11 @@
             margin: auto;
             display: block;
         }
+        .boxed-list li {
+            border: 1px solid #000; /* Add a border around each list item */
+            padding: 10px; /* Add padding inside the border */
+            margin-bottom: 10px; /* Add margin between each list item */
+          }
     </style>
 </head>
 <body>
@@ -43,11 +48,11 @@
     </div>
     <div class ="options">
         <h1>List of Options:</h1>
-        <ul>
-            {% for option in list %}
+        <ol class="boxed-list">
+            {% for option in options %}
                 <li>{{ option }}</li>
             {% endfor %}
-        </ul>
+        </ol>
     </div>
     <script>
         const values = {{ list|safe }};

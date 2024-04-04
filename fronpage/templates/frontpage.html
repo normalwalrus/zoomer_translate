@@ -12,11 +12,30 @@
         .content {
             text-align: center;
         }
+        .radio-box {
+            display: block;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        
+        .radio-box:hover {
+            background-color: #f0f0f0; /* Highlight the box on hover */
+        }
+        
+        {% comment %} .radio-box input[type="radio"] {
+            display: none; /* Hide the actual radio button */
+        } {% endcomment %}
+
+        .radio-box input[type="radio"]:checked + label {
+            background-color: #f0f0f0; /* Highlight the box when radio button is checked */
+        }
+        
     </style>
 </head>
 <body>
     <div class="content">
-        <img src="/static/zoomer_translate_logo.jpg" alt="Example Image" style="max-width: 350px; max-height: 300pxpx;">
+        <img src="/static/zoomer_translate_logo.jpg" alt="Example Image" style="max-width: 350px; max-height: 300px;">
         <h1> Zoomer word : </h1>
         <p>{{ zoomer_word }}</p>
 
@@ -24,8 +43,10 @@
         <form action="/fronpage/submit/" method="post">
             {% csrf_token %}
             {% for option in options %}
-                <input type="radio" id="option{{ forloop.counter }}" name="text_option" value="{{ zoomer_word }}|{{ option }}">
-                <label for="option{{ forloop.counter }}">{{ option }}</label><br>
+                <label for="option{{ forloop.counter }}" class="radio-box">
+                    <input type="radio" id="option{{ forloop.counter }}" name="text_option" value="{{ zoomer_word }}|{{ option }}">
+                    {{ option }}
+                </label>
             {% endfor %}
             <button type="submit">Submit</button>
         </form>
