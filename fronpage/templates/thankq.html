@@ -45,7 +45,14 @@
         .return-box:hover {
             background-color: #f0f0f0; /* Highlight the box on hover */
         }
-        
+
+        hr.custom {
+        border: none; /* Remove default border */
+        height: 2px; /* Set the thickness of the line */
+        background-color: black; /* Set the color of the line */
+        margin-top: 30px; /* Set the spacing above the line */
+        margin-bottom: 30px; /* Set the spacing below the line */
+        }
     </style>
 </head>
 <body>
@@ -53,8 +60,28 @@
         <h1>Thank You!</h1>
         <p>You are helping translate slang one word at a time!</p>
     </div>
-    
+
     <div class="chart-container">
+        <hr class="custom">
+        <h1>For the phrase "{{ check_word }}":</h1>
+        <h2>You chose option {{ check_choice}}</h2>
+        <canvas id="checkChart" width="600" height="300"></canvas>
+    </div>
+    <div class ="options">
+        <h1>List of Options:</h1>
+        <ol class="boxed-list">
+            {% for option in checked_options %}
+                {% if forloop.counter == check_choice %}
+                    <li class="highlight">{{ option }}</li>
+                {% else %}
+                    <li>{{ option }}</li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </div>
+
+    <div class="chart-container">
+        <hr class="custom">
         <h1>For the phrase "{{ zoomer_word }}":</h1>
         <h2>You chose option {{choice}}</h2>
         <canvas id="choicesChart" width="600" height="300"></canvas>
@@ -77,8 +104,51 @@
     </div>
 
     <script>
-        const values = {{ list|safe }};
+        const check_values = {{ check_list|safe }};
         const labels = ["Option 1", "Option 2", "Option 3"];
+
+        const check_data = {
+            labels: labels,
+            datasets: [
+                {
+                    // label: labels,
+                    data: check_values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)', // Red with transparency
+                        'rgba(54, 162, 235, 0.5)', // Blue with transparency
+                        'rgba(75, 192, 192, 0.5)', // Green with transparency
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)', // Red
+                        'rgba(54, 162, 235, 1)', // Blue
+                        'rgba(75, 192, 192, 1)', // Green
+                    ],
+                    borderRadius: 15,
+                }
+            ]
+        };
+
+        var ctx = document.getElementById('checkChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    title: {
+                        display: true,
+                        text: 'Choices 1 Chart'
+                    }
+                },
+            }
+        });
+    </script>
+
+    <script>
+        const values = {{ list|safe }};
 
         const data = {
             labels: labels,
@@ -113,7 +183,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Choices Chart'
+                        text: 'Choices 2 Chart'
                     }
                 },
             }
