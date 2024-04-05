@@ -36,15 +36,9 @@ def submit_form(request):
             if row[0] == check_word:
                 row.pop(0)
                 row_checksel[index][int(check_choice)] = str(int(row_checksel[index][int(check_choice)]) + 1)
-                check_list_display = rows_filtered[index]
-                if int(row[3])+1 == check_choice:
-                    rows_filtered[index][int(check_choice)] = str(int(rows_filtered[index][int(check_choice)]) + 1)
-                    check_list_display = rows_filtered[1:]
+                check_list_display = row_checksel[index][1:]
+                correct_choice = int(row[3])+1
                 checked_options = row[:3]
-
-        with open(path_to_filtered_csv, 'w', newline='') as csvfile:
-            writer = csv.writer(csvfile)
-            writer.writerows(rows_filtered)
 
         with open(path_to_checkselection_csv, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
@@ -54,11 +48,14 @@ def submit_form(request):
             reader = csv.reader(csvfile)
             rows = list(reader)  # Read all rows into a list
 
-        for row in rows:
+        for index2, row in enumerate(rows):
             if row[0] == zoomer_word:
                 # Increment the value in the first index
                 row[int(choice)] = str(int(row[int(choice)]) + 1)  # Increment the value
                 final_list_display = row
+                if correct_choice == check_choice:
+                    abc = index2
+                    rows_filtered[index2][int(choice)] = str(int(rows_filtered[index2][int(choice)]) + 1)
 
         with open(path_to_options_csv, 'r', newline='') as csvfile:
             reader = csv.reader(csvfile)
@@ -73,6 +70,10 @@ def submit_form(request):
         with open(path_to_final_csv, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerows(rows)
+
+        with open(path_to_filtered_csv, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerows(rows_filtered)
 
         # Process the form data as needed
         # Redirect to another page
