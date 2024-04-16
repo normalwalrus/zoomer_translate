@@ -1,1 +1,6 @@
 # zoomer_translate
+
+In today's fast-paced digital landscape, language and technology intertwine in fascinating ways. This project draws inspiration from the concepts - crowdsourcing and CAPTCHA, along with the distinct communication style of Generation Z.
+Crowdsourcing involves tapping into the collective wisdom and efforts of a diverse group of people. It's a powerful tool for problem-solving in our digital age. CAPTCHA, originally designed to tell hu apart from bots online, has evolved to engage human characteristics for various tasks.
+Generation Z, the demographic born roughly between the mid-1990s and early 2010s, has its own unique language. This generation's communication is characterized by slang, abbreviations, and memes, often leaving older generations scratching their heads.
+This project aims to combine these ideas by crowdsourcing definitions for "zoomer words" - the slang and phrases used by Generation Z. By bringing together contributions from various individuals, we hope to bridge the gap in understanding between generations and celebrate the diversity of language in our modern world. Through this approach, we strive to promote inclusivity and comprehension across different age groups.
