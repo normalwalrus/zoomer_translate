@@ -12,23 +12,77 @@
         .content {
             text-align: center;
         }
+        .radio-box {
+            display: block;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        
+        .radio-box:hover {
+            background-color: #f0f0f0; /* Highlight the box on hover */
+        }
+        
+        {% comment %} .radio-box input[type="radio"] {
+            display: none; /* Hide the actual radio button */
+        } {% endcomment %}
+
+        .radio-box input[type="radio"]:checked+label{
+            background-color: #f0f0f0; /* Highlight the box when radio button is checked */
+        }
+        hr.custom {
+        border: none; /* Remove default border */
+        height: 2px; /* Set the thickness of the line */
+        background-color: black; /* Set the color of the line */
+        margin-top: 30px; /* Set the spacing above the line */
+        margin-bottom: 30px; /* Set the spacing below the line */
+        }
     </style>
 </head>
 <body>
     <div class="content">
-        <img src="/static/zoomer_translate_logo.jpg" alt="Example Image" style="max-width: 350px; max-height: 300pxpx;">
-        <h1> Zoomer word : </h1>
-        <p>{{ zoomer_word }}</p>
-
-        <h2>What best describes this?</h2>
+        <img src="/static/zoomer_translate_logo.jpg" alt="Example Image" style="max-width: 350px; max-height: 300px;">
+        
         <form action="/fronpage/submit/" method="post">
             {% csrf_token %}
-            {% for option in options %}
-            <input type="radio" id="option" name="text_option" value= "{{zoomer_word}}|{{option}}">
-            <label for="option">{{option}}</label><br>
+            <hr class="custom">             <!-- ZADDY IAN ZADDY IAN ZADDY IAN ZADDY IAN REMOVE THIS LINE IF UGLY-->
+            <h1> Zoomer word 1: </h1>
+            <p>{{ check_word }}</p>
+
+            <h2>What best describes this?</h2>
+            {% for option in options_checking %}
+                <label for="option1{{ forloop.counter }}" class="radio-box">
+                    <input type="radio" id="option1{{ forloop.counter }}" name="check_option" value="{{ check_word }}|{{ option }}">
+                    {{ option }}
+                </label>
             {% endfor %}
-            <button type="submit">Submit</button>
+            <hr class="custom">
+            <h1> Zoomer word 2: </h1>
+            <p>{{ zoomer_word }}</p>
+
+            <h2>What best describes this?</h2>
+            {% for option in options %}
+                <label for="option2{{ forloop.counter }}" class="radio-box">
+                    <input type="radio" id="option2{{ forloop.counter }}" name="text_option" value="{{ zoomer_word }}|{{ option }}">
+                    {{ option }}
+                </label>
+            {% endfor %}
+
+            <button type="submit" id="submitButton">Submit</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function(event) {
+            var answer1 = document.querySelector('input[name="check_option"]:checked');
+            var answer2 = document.querySelector('input[name="text_option"]:checked');
+    
+            // Check if both MCQs are answered
+            if (!answer1 || !answer2) {
+                alert('Please answer both questions before submitting.');
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    </script>
 </body>
 </html>
